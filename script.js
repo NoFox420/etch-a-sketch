@@ -2,9 +2,14 @@ const container = document.getElementById("container");
 const gridButtonSmall = document.getElementById("gridButtonSmall");
 const gridButtonMedium = document.getElementById("gridButtonMedium");
 const gridButtonLarge = document.getElementById("gridButtonLarge");
+const colorButton = document.getElementsByClassName("colorOption");
 
 const createGrid = (rows, cols) => {
   container.replaceChildren();
+  let opacity = 0;
+  let r = Math.floor(Math.random() * 256);
+  let g = Math.floor(Math.random() * 256);
+  let b = Math.floor(Math.random() * 256);
 
   for (let i = 1; i <= rows; i++) {
     const gridDivH = document.createElement("div");
@@ -25,8 +30,25 @@ const createGrid = (rows, cols) => {
       gridDivH.style.border = "0.5px solid black";
     }
     gridDivH.addEventListener("mouseover", () => {
-      gridDivH.style.backgroundColor = "black";
+      gridDivH.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+      r += 5;
+      g += 5;
+      b += 5;
+      opacity += 0.05;
+      gridDivH.style.opacity = opacity;
+
+      if (opacity >= 1) {
+        opacity = 0;
+      }
+      if (r <= 254 || g <= 254 || b <= 254) {
+        gridDivH.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+      } else {
+        r = Math.floor(Math.random() * 256);
+        g = Math.floor(Math.random() * 256);
+        b = Math.floor(Math.random() * 256);
+      }
     });
+
     for (let j = 1; j <= cols; j++) {
       const gridDivV = document.createElement("div");
       container.appendChild(gridDivV);
@@ -42,12 +64,30 @@ const createGrid = (rows, cols) => {
         gridDivV.style.height = "7.5px";
         gridDivV.style.border = "0.5px solid black";
       }
+
       gridDivV.addEventListener("mouseover", () => {
-        gridDivV.style.backgroundColor = "black";
+        gridDivV.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+        r += 5;
+        g += 5;
+        b += 5;
+        opacity += 0.05;
+        gridDivV.style.opacity = opacity;
+
+        if (opacity >= 1) {
+          opacity = 0;
+        }
+        if (r <= 254 || g <= 254 || b <= 254) {
+          gridDivV.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+        } else {
+          r = Math.floor(Math.random() * 256);
+          g = Math.floor(Math.random() * 256);
+          b = Math.floor(Math.random() * 256);
+        }
       });
     }
   }
 };
+
 createGrid(16, 15);
 
 gridButtonSmall.addEventListener("click", (e) => {
