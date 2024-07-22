@@ -1,35 +1,61 @@
 const container = document.getElementById("container");
-const gridButton = document.getElementById("gridButton");
+const gridButtonSmall = document.getElementById("gridButtonSmall");
+const gridButtonMedium = document.getElementById("gridButtonMedium");
+const gridButtonLarge = document.getElementById("gridButtonLarge");
 
-const createGrid = (gridWith, gridHeight) => {
-  if (gridWith >= 100 || gridHeight >= 100) {
-    alert("One of your dimensions is too big!");
-  } else if (gridWith && gridHeight <= 100) {
-    for (let i = 1; i <= gridWith; i++) {
-      const gridDivH = document.createElement("div");
-      container.appendChild(gridDivH);
-      gridDivH.classList.add("gridH");
-      gridDivH.addEventListener("mouseover", () => {
-        gridDivH.style.backgroundColor = "black";
-      });
-      for (let j = 1; j <= gridHeight; j++) {
-        const gridDivV = document.createElement("div");
-        container.appendChild(gridDivV);
-        gridDivV.classList.add("gridV");
-        gridDivV.addEventListener("mouseover", () => {
-          gridDivV.style.backgroundColor = "black";
-        });
-      }
+const createGrid = (rows, cols) => {
+  container.replaceChildren();
+
+  for (let i = 1; i <= rows; i++) {
+    const gridDivH = document.createElement("div");
+    container.appendChild(gridDivH);
+    gridDivH.classList.add("gridH");
+    if (rows === 16) {
+      gridDivH.style.width = "30px";
+      gridDivH.style.height = "30px";
+      container.style.gap = "1px";
+    } else if (rows === 32) {
+      gridDivH.style.width = "15px";
+      gridDivH.style.height = "15px";
+      container.style.gap = "0.5px";
+    } else {
+      gridDivH.style.width = "7.5px";
+      gridDivH.style.height = "7.5px";
+      container.style.gap = "0.25px";
+      gridDivH.style.border = "0.5px solid black";
     }
-  } else {
-    alert("Please enter a smaller number!");
+    gridDivH.addEventListener("mouseover", () => {
+      gridDivH.style.backgroundColor = "black";
+    });
+    for (let j = 1; j <= cols; j++) {
+      const gridDivV = document.createElement("div");
+      container.appendChild(gridDivV);
+      gridDivV.classList.add("gridV");
+      if (cols === 15) {
+        gridDivV.style.width = "30px";
+        gridDivV.style.height = "30px";
+      } else if (cols === 31) {
+        gridDivV.style.width = "15px";
+        gridDivV.style.height = "15px";
+      } else {
+        gridDivV.style.width = "7.5px";
+        gridDivV.style.height = "7.5px";
+        gridDivV.style.border = "0.5px solid black";
+      }
+      gridDivV.addEventListener("mouseover", () => {
+        gridDivV.style.backgroundColor = "black";
+      });
+    }
   }
 };
 createGrid(16, 15);
 
-gridButton.addEventListener("click", (e) => {
-  const gridWith = prompt("How wide should the grid be?");
-  const gridHeight = prompt("How high should the grid be?");
-  container.replaceChildren();
-  createGrid(gridWith, gridHeight);
+gridButtonSmall.addEventListener("click", (e) => {
+  createGrid(16, 15);
+});
+gridButtonMedium.addEventListener("click", (e) => {
+  createGrid(32, 31);
+});
+gridButtonLarge.addEventListener("click", (e) => {
+  createGrid(64, 63);
 });
